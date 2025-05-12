@@ -17,9 +17,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from posts.views import post_list_view, homepage_view
+from django.conf.urls.static import static
+from django.conf import settings 
 
 urlpatterns = [
     path("", homepage_view),
     path('admin/', admin.site.urls),
     path("posts/", post_list_view),
-]   
+] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

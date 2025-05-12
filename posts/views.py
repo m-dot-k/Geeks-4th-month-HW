@@ -7,4 +7,4 @@ def homepage_view(request):
 
 def post_list_view(request):
     posts = Post.objects.all()
-    return render(request, "posts/posts.html", context={"posts": posts})
+    return render(request, "posts/post_list.html", context={"posts": posts})

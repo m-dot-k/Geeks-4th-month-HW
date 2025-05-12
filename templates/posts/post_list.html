@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+{%for post in posts%}
+<div class="card" style="width: 18rem;">
+  {% if post.image %}
+    <img class="card-img-top" src="{{post.image.url}}" alt="Card image cap">
+  {% else %}
+    <img src = "{% static 'Portrait_Placeholder.png'%}" class = "card-img-top" alt="...">
+  {% endif %}
+    <div class="card-body">
+      <h5 class="card-title">{{post.title}}</h5>
+      <p class="card-text">{{post.content}}</p>
+      <p class="card-text">{{post.created_at}}</p>
+      <a href="#" class="btn btn-primary">Go somewhere</a>
+    </div>
+  </div>
+{%endfor%}
+{% endblock %}
