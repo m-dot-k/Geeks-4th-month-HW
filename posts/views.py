@@ -27,4 +27,5 @@ def post_create_view(request):
         elif form.is_valid():
             data = form.cleaned_data
             post = Post.objects.create(**data)
+            # ModelForm.save()
             return redirect("/posts/")
