@@ -2,6 +2,10 @@
 {% load static %}
 
 {% block content %}
+<form action = "" method = "get" enctype="multipart/form-data">
+  {{ form.as_p }}
+  <button type = 'submit' class = "btn btn-primary">Search</button>
+</form>
 {%for post in posts%}
 <div class="card" style="width: 18rem;">
   {% if post.image %}
@@ -12,9 +16,17 @@
     <div class="card-body">
       <h5 class="card-title">{{post.title}}</h5>
       <p class="card-text">{{post.content}}</p>
+      <p class="card-text">{{post.rate}}</p>
       <p class="card-text">{{post.created_at}}</p>
       <a href="/posts/{{post.id}}" class="btn btn-primary">Go to post</a>
     </div>
   </div>
 {%endfor%}
+  <div style="display: flex; justify-content: center; margin-top: 20px; margin-bottom: 20px;">
+    {% for i in max_pages %}
+      <a href = "/posts/?page={{i}}" class="btn btn-primary">
+        {{i}}
+      </a>
+    {% endfor %}
+  </div>
 {% endblock %}

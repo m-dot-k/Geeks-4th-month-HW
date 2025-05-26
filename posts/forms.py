@@ -23,3 +23,16 @@ class PostForm(forms.ModelForm):
 
         if (title == content) or (title.lower() == content.lower()):
             raise forms.ValidationError("title and content cannot be same")
+        return cleaned_data
+    
+class SearchForm(forms.Form):
+    search = forms.CharField(max_length=80, required=False)
+    category_id = forms.ModelChoiceField (queryset=Category.objects.all(), required=False)
+
+    orderings = (
+        ("created_at", "Creation Date (asc)"),
+        ("-created_at", "Creation Date (desc)"),
+        ("rate", "Rate"),
+        ("-rate", "Rate (desc)"),
+    )
+    ordering = forms.ChoiceField(choices=orderings, required=False)
