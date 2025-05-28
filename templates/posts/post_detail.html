@@ -13,6 +13,9 @@
       <h5 class="card-title">{{post.title}}</h5>
       <p class="card-text">{{post.content}}</p>
       <p class="card-text">{{post.created_at}}</p>
+      {% if post.author == request.user %}
+        <a href="/posts/{{post.id}}/edit/" class="btn btn-primary">Edit post</a>
+      {% endif %}
     </div>
   </div>
 

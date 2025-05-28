@@ -66,3 +66,17 @@ def post_create_view(request):
             post = Post.objects.create(**data)
             # ModelForm.save()
             return redirect("/posts/")
+
+@login_required(login_url="/login/")
+def post_update_view(request, post_id):
+    post = Post.objects.filter(id = post_id).first()
+    if request.method == "GET":
+        form = PostForm(instance=post)
+        return render(request, "posts/post_edit.html", context = {"form":form, "post":post})
+    if request.method == "POST":
+        form = PostForm(request.POST, request.FILES, instance=post)
+        if not form.is_valid():
+            return render (request, "posts/post_edit.html", context={"form":form})
+        elif form.is_valid():
+            form.save()
+            return redirect ("/profile/")

@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from users.forms import RegisterForm, LoginForm
+from users.models import Profile
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
@@ -16,7 +17,14 @@ def register_view (request):
         elif form.is_valid():
             data = form.cleaned_data
             data.__delitem__("password_confirm")
-            User.objects.create_user(**data)
+            age = data.pop("age", None)
+            image = data.pop("image", None)
+            user = User.objects.create_user(**data)
+            if user:
+                Profile.objects.create(user=user, age=age, image=image)
+                login(request, user)
+                return redirect("/")
+
         return redirect("/")
 
 def login_view(request):
@@ -40,3 +48,9 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return redirect ("/")
+
+@login_required(login_url="/login/")
+def profile_view(request):
+    user = request.user
+    posts = user.posts.all()
+    return render(request, "users/profile.html", context={"user":user, "posts":posts})

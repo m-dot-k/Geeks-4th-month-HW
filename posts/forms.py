@@ -7,7 +7,7 @@ class PostForm(forms.ModelForm):
     # title = forms.CharField(max_length=256)
     # content = forms.CharField(max_length=512)
         model = Post
-        fields = ["image", "title", "content"]
+        fields = ["image", "title", "content", "category"]
 
     def clean_title(self):
         cleaned_data = super().clean()
